@@ -2,8 +2,53 @@
 Cifrado de archivos txt en Python utilizando criptografía híbrida.
 
 La criptografía híbrida es el uso de diferentes algortimos criptográficos para poder lograr diferentes propiedades de la ciberseguridad de los activos.
+Este programa nos permite, mediante el uso de diferentes algoritmos, poder cifrar y firmar un archivo de extensión **txt** con claves públicas y privadas, además de poder descifrar y verificar correctamente dichos archivos.
 
-Los algortimos utilizados son:
+*Antes de hacer uso del programa, se deben generar claves públicas y privadas de 2048 bytes para todas las partes, para así poder cifrar, descifrar y verificar correctamente los archivos.**
+
+El funcionamiento del programa está descrito de la siguiente manera...
+
+!(Diagrama del programa)[/m.png]
+
+Se ingresan las direcciones de los siguientes requerimientos:
+
+**Archivo de Mensaje en .txt**, **Archivo de Salida del cifrado/descifrado**
+
+**Para cifrar:** Llave Privada del Emisor para Firmar, Llave Pública del Receptor para Cifrar
+**Para descifrar:** Llave Privada del Receptor para Descifrar, Llave Pública del Emisor para Verificar
+
+## Cifrado y Firma
+
+Se genera una llave y vector de entrada aleatorios para cifrar la información del archivo mediante AES-128 utilizando el modo CBC.
+Utilizando RSA y la Llave Pública del Receptor, se cifra la llave generada anteriormente.
+Se utiliza SHA-256 para generar un digesto del mensaje y medienta RSA se cifra utilizando la Llave Privada del Emisor que servirá como firma.
+Se genera un nuevo archivo que contiene en orden:
+**Vector aleatorio de entrada**
+**Llave aleatoria cifrada**
+**Firma**
+**Texto Cifrado**
+
+!(Archivo cifrado)[archivo_cifrado.png]
+
+## Descifrado y Verificación
+
+Se descifra la llave con RSA utilizando la Llave Privada del Receptor.
+Utilizando AES, el vector de entrada y la llave descifrada anteriormente, se descifra el mensaje.
+Utilizando la Llave Pública del Emisor, se descifra la firma.
+Se utiliza SHA-256 para generar un digesto del mensaje descifrado, de forma que, la firma descifrada anteriormente y el digesto deban ser idénticos.
+
+!(Archivo descifrado correctamente)[descifrado.png]
+
+## Errores
+Si se llegan a utilizar diferentes llaves para descifrar o verificar la procedencia del archivo, se arrojará un error de autenticación, indicando que las llaves que se están utilizando son incorrectas.
+
+!(Error de autenticación)[autenticacion.png]
+
+Si se modifica el archivo cifrado y después se intenta descifrar utilizando las llaves adecuadas, se indicará un error en el que no se puede realizar correctamente el descifrado.
+
+!(Error de integridad)[integridad.png]
+
+# Algoritmos Utilizados
 
 ## AES
 
