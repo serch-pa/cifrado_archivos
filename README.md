@@ -39,7 +39,7 @@ Utilizando AES, el vector de entrada y la llave descifrada anteriormente, se des
 Utilizando la Llave Pública del Emisor, se descifra la firma.<br>
 Se utiliza SHA-256 para generar un digesto del mensaje descifrado, de forma que, la firma descifrada anteriormente y el digesto deban ser idénticos.
 
-!(Archivo descifrado correctamente)[descifrado.png]
+![Archivo descifrado correctamente](descifrado.png)
 
 ## Errores
 Si se llegan a utilizar diferentes llaves para descifrar o verificar la procedencia del archivo, se arrojará un error de autenticación, indicando que las llaves que se están utilizando son incorrectas.
